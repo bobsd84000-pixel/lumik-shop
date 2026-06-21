@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灯 LUMIK — Artisanat japonais, direct de la source</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --serif:'Shippori Mincho', serif;
+    --sans:'Zen Kaku Gothic New', system-ui, sans-serif;
+    /* base — laque brune + vermillon */
+    --washi:#F4F1E9; --sumi:#1C1A17; --urushi:#8B6B47; --shu:#C0392B;
+    --border:#E2DDD0; --muted:#857F73; --card:#FBFAF6;
+  }
+  html[data-theme="indigo"]{ --washi:#EFEEE8; --sumi:#17263D; --urushi:#3C5A82; --shu:#2D4F8A; --border:#DAD8CE; --muted:#7C7E84; --card:#FAFAF5; }
+  html[data-theme="vert"]{ --washi:#F1F0E5; --sumi:#222A1C; --urushi:#6E7C53; --shu:#5E7137; --border:#DEDDCE; --muted:#82806F; --card:#FAF9F0; }
+  html[data-theme="sumi"]{ --washi:#161410; --sumi:#EFE9DC; --urushi:#C9A86A; --shu:#D46A53; --border:#322D24; --muted:#9A9384; --card:#211D16; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;background:var(--washi);color:var(--sumi);font-family:var(--sans);line-height:1.6;}
+  body{overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--shu);color:#fff;}
+
+  #banner{background:var(--sumi);color:#F4F1E9;text-align:center;font-size:11px;letter-spacing:.14em;padding:9px 14px;text-transform:uppercase;}
+
+  #nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+       padding:14px 18px;background:rgba(244,241,233,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  .brand{font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.04em;display:flex;align-items:center;gap:7px;}
+  .brand .lamp{color:var(--shu);}
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .nav-links{display:flex;gap:18px;font-size:12.5px;letter-spacing:.03em;}
+  .nav-links a{color:var(--muted);transition:color .2s;}
+  .nav-links a:hover{color:var(--sumi);}
+  .nav-ico{cursor:pointer;font-size:18px;line-height:1;position:relative;background:none;border:none;padding:0;}
+  #cartCount{position:absolute;top:-7px;right:-9px;background:var(--shu);color:#fff;font-family:var(--sans);
+             font-size:10px;font-weight:700;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+  #hero{position:relative;padding:78px 22px 88px;text-align:center;overflow:hidden;}
+  #hero::before{content:"";position:absolute;top:32px;left:50%;transform:translateX(-50%);
+                width:300px;height:300px;border-radius:50%;
+                background:radial-gradient(circle, rgba(192,57,43,.16), rgba(139,107,71,.06) 45%, transparent 70%);filter:blur(6px);z-index:0;}
+  .hero-lamp{position:relative;z-index:1;font-family:var(--serif);font-size:62px;line-height:1;margin-bottom:6px;text-shadow:0 2px 30px rgba(192,57,43,.25);}
+  .eyebrow{position:relative;z-index:1;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--shu);margin:18px 0 14px;font-weight:700;}
+  #hero h1{position:relative;z-index:1;font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.3;margin:0 auto;max-width:560px;}
+  #hero p.sub{position:relative;z-index:1;color:var(--muted);max-width:440px;margin:18px auto 0;font-size:14.5px;}
+  .hero-cta{position:relative;z-index:1;display:inline-flex;align-items:center;gap:9px;margin-top:30px;
+            background:var(--sumi);color:var(--washi);border:none;padding:15px 30px;font-family:var(--sans);
+            font-size:13px;font-weight:500;letter-spacing:.05em;cursor:pointer;border-radius:2px;transition:transform .15s, background .2s;}
+  .hero-cta:hover{background:var(--shu);transform:translateY(-2px);}
+  .hero-cta .arr{transition:transform .2s;}
+  .hero-cta:hover .arr{transform:translateX(3px);}
+  .tate{position:absolute;top:90px;right:16px;z-index:1;writing-mode:vertical-rl;font-family:var(--serif);font-size:13px;letter-spacing:.32em;color:var(--muted);}
+
+  #pillars{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--card);}
+  .pillar{padding:34px 16px;text-align:center;border-right:1px solid var(--border);}
+  .pillar:last-child{border-right:none;}
+  .pillar .kj{font-family:var(--serif);font-size:30px;color:var(--shu);line-height:1;}
+  .pillar .pt{font-size:12.5px;font-weight:700;margin:12px 0 6px;}
+  .pillar .pd{font-size:11px;color:var(--muted);line-height:1.55;}
+
+  #cat{padding:54px 18px 60px;}
+  .cat-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+  .cat-head h2{font-family:var(--serif);font-weight:600;font-size:24px;margin:0;}
+  .cat-head .ct-jp{font-family:var(--serif);font-size:13px;color:var(--muted);letter-spacing:.2em;}
+  #status{font-size:12px;color:var(--muted);min-height:18px;margin-bottom:20px;}
+  #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px;}
+  .card{background:var(--card);border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s, transform .2s, box-shadow .2s;}
+  .card:hover{border-color:var(--urushi);transform:translateY(-3px);box-shadow:0 8px 22px rgba(28,26,23,.07);}
+  .card-img{aspect-ratio:1;background:linear-gradient(150deg,#EFEAE0,#F8F5EF);display:flex;align-items:center;justify-content:center;font-size:46px;position:relative;}
+  .card-img::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -1px 0 var(--border);}
+  .card-body{padding:13px 13px 14px;display:flex;flex-direction:column;flex:1;}
+  .card-name{font-size:12.5px;font-weight:500;line-height:1.35;margin-bottom:auto;}
+  .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;}
+  .card-price{font-family:var(--serif);font-weight:700;font-size:16px;}
+  .card-add{background:none;border:1px solid var(--sumi);color:var(--sumi);width:34px;height:34px;border-radius:50%;
+            font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;}
+  .card-add:hover{background:var(--sumi);color:var(--washi);}
+
+  footer{background:var(--sumi);color:#C9C3B6;padding:40px 22px 46px;text-align:center;}
+  footer .f-lamp{font-family:var(--serif);font-size:26px;color:#fff;margin-bottom:14px;}
+  footer .f-lamp span{color:var(--shu);}
+  footer .f-line{font-size:12px;}
+  footer .f-cities{font-size:11px;color:#8C857A;margin-top:10px;}
+
+  #overlay{position:fixed;inset:0;background:rgba(28,26,23,.4);z-index:90;opacity:0;pointer-events:none;transition:opacity .3s;}
+  #overlay.open{opacity:1;pointer-events:all;}
+  #drawer{position:fixed;top:0;right:0;height:100dvh;width:360px;max-width:88vw;background:var(--washi);z-index:100;
+          border-left:1px solid var(--border);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+          display:flex;flex-direction:column;box-shadow:-6px 0 30px rgba(0,0,0,.12);}
+  #drawer.open{transform:translateX(0);}
+  .d-head{display:flex;align-items:center;justify-content:space-between;padding:18px;border-bottom:1px solid var(--border);}
+  .d-head .t{font-family:var(--serif);font-size:17px;font-weight:600;}
+  .d-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;}
+  #progress{padding:13px 18px;font-size:12px;border-bottom:1px solid var(--border);background:var(--card);}
+  #progBar{height:4px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;}
+  #progFill{height:100%;width:0;background:var(--shu);transition:width .3s;}
+  #items{flex:1;overflow-y:auto;padding:8px 18px;}
+  .empty{color:var(--muted);font-size:13px;text-align:center;padding:50px 10px;}
+  .row{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);}
+  .row .ico{width:44px;height:44px;background:#EFEAE0;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+  .row .meta{flex:1;min-width:0;}
+  .row .rn{font-size:12.5px;line-height:1.3;}
+  .row .rp{font-family:var(--serif);font-size:13px;color:var(--urushi);margin-top:3px;}
+  .qty{display:flex;align-items:center;gap:6px;}
+  .qty button{width:24px;height:24px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:14px;line-height:1;border-radius:3px;}
+  .qty span{font-size:12px;min-width:16px;text-align:center;}
+  .d-foot{border-top:1px solid var(--border);padding:16px 18px 20px;background:var(--card);}
+  .d-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .d-total .tl{font-size:12px;color:var(--muted);letter-spacing:.04em;}
+  .d-total .tv{font-family:var(--serif);font-size:22px;font-weight:700;}
+  #checkout{width:100%;background:var(--sumi);color:var(--washi);border:none;padding:15px;font-family:var(--sans);
+            font-size:13px;font-weight:500;letter-spacing:.05em;cursor:pointer;border-radius:2px;transition:background .2s;}
+  #checkout:hover{background:var(--shu);}
+
+  @media(max-width:560px){
+    #pillars{grid-template-columns:1fr;}
+    .pillar{border-right:none;border-bottom:1px solid var(--border);}
+    .pillar:last-child{border-bottom:none;}
+    #grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+    #hero h1{font-size:29px;}
+    .tate{display:none;}
+    .guarantees{grid-template-columns:repeat(2,1fr);}
+    .guar:nth-child(2){border-right:none;}
+    .guar:nth-child(1),.guar:nth-child(2){border-bottom:1px solid var(--border);}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  .sec{padding:56px 18px;}
+  .sec-head{text-align:center;margin-bottom:30px;}
+  .sec-head .jp{font-family:var(--serif);font-size:11px;letter-spacing:.3em;color:var(--shu);text-transform:uppercase;font-weight:700;}
+  .sec-head h2{font-family:var(--serif);font-weight:600;font-size:25px;margin:9px 0 0;}
+  .sec-head p{color:var(--muted);font-size:13.5px;max-width:420px;margin:11px auto 0;}
+  .mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px;max-width:690px;margin:0 auto;}
+  .sec-cta{text-align:center;margin-top:32px;}
+
+  .origins{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:50px 18px;}
+  .origins .sec-head{margin-bottom:22px;}
+  .origin{max-width:560px;margin:0 auto;padding:26px 4px;border-bottom:1px solid var(--border);display:flex;gap:22px;align-items:flex-start;}
+  .origin:last-child{border-bottom:none;}
+  .origin .ok{font-family:var(--serif);font-size:42px;color:var(--shu);line-height:.9;flex-shrink:0;}
+  .origin .otitle{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:5px;}
+  .origin .odesc{font-size:13px;color:var(--muted);line-height:1.65;}
+
+  .reviews{text-align:center;}
+  .stars{font-size:21px;color:var(--shu);letter-spacing:4px;}
+  .rscore{font-family:var(--serif);font-size:13.5px;color:var(--muted);margin-top:9px;}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:720px;margin:28px auto 0;}
+  .rcard{border:1px solid var(--border);background:var(--card);padding:18px;text-align:left;}
+  .rcard .rq{font-family:var(--serif);font-size:14px;line-height:1.6;}
+  .rcard .ra{font-size:11.5px;color:var(--muted);margin-top:11px;letter-spacing:.04em;}
+
+  .guarantees{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);background:var(--card);}
+  .guar{padding:26px 14px;text-align:center;border-right:1px solid var(--border);}
+  .guar:last-child{border-right:none;}
+  .guar .gi{font-size:23px;}
+  .guar .gt{font-size:11.5px;font-weight:700;margin-top:9px;}
+  .guar .gd{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.5;}
+
+  .final{text-align:center;padding:62px 22px;}
+  .final .fc-jp{font-family:var(--serif);font-size:36px;color:var(--shu);line-height:1;}
+  .final h2{font-family:var(--serif);font-weight:600;font-size:25px;margin:16px 0 24px;}
+
+  .geo-sec{padding:54px 18px;max-width:680px;margin:0 auto;}
+  .geo-sec h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 14px;}
+  .geo-block{border-left:3px solid var(--shu);background:var(--card);padding:16px 20px;border-radius:0 8px 8px 0;}
+  .geo-block p{margin:0;font-size:14px;color:var(--muted);line-height:1.7;}
+  .cat-top{display:flex;align-items:center;gap:14px;padding:18px 18px 0;}
+  .back-btn{background:none;border:1px solid var(--border);color:var(--muted);font-family:var(--sans);
+            font-size:12px;letter-spacing:.04em;padding:8px 14px;border-radius:2px;cursor:pointer;transition:all .2s;}
+  .back-btn:hover{border-color:var(--urushi);color:var(--sumi);}
+
+  /* overrides thème sombre */
+  html[data-theme="sumi"] #banner{background:#0E0C09;color:var(--sumi);}
+  html[data-theme="sumi"] #nav{background:rgba(22,20,16,.85);}
+  html[data-theme="sumi"] footer{background:#0E0C09;color:#A89F8E;}
+  html[data-theme="sumi"] .hero-cta,html[data-theme="sumi"] #checkout{background:var(--shu);color:#161410;}
+  html[data-theme="sumi"] .hero-cta:hover,html[data-theme="sumi"] #checkout:hover{background:#E2805F;}
+  html[data-theme="sumi"] .card-img{background:linear-gradient(150deg,#221E16,#1A1711);}
+  html[data-theme="sumi"] .row .ico{background:#2A251C;}
+</style>
+
+<!-- ░░ Zoom photo produit — styles (additif) ░░ -->
+<style>
+  .card-img{cursor:zoom-in;}
+  .card-img::before{content:'⤢';position:absolute;bottom:7px;right:7px;width:24px;height:24px;border-radius:50%;
+            background:rgba(28,26,23,.55);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;
+            opacity:0;transition:opacity .2s;pointer-events:none;z-index:2;}
+  .card:hover .card-img::before{opacity:1;}
+  #lumik-lb{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;
+            background:rgba(20,16,12,.72);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s;}
+  #lumik-lb.open{opacity:1;pointer-events:auto;}
+  #lumik-lb .llb-card{background:var(--card);border:1px solid var(--border);max-width:420px;width:100%;overflow:hidden;
+            display:flex;flex-direction:column;transform:scale(.96);transition:transform .25s;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+  #lumik-lb.open .llb-card{transform:scale(1);}
+  #lumik-lb .llb-visual{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:150px;position:relative;
+            background:linear-gradient(150deg,#EFEAE0,#F8F5EF);}
+  #lumik-lb .llb-visual img{width:100%;height:100%;object-fit:cover;display:block;}
+  #lumik-lb .llb-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:none;
+            background:rgba(20,16,12,.45);color:#fff;font-size:17px;line-height:1;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;}
+  #lumik-lb .llb-body{padding:18px 20px 22px;}
+  #lumik-lb .llb-name{font-family:var(--serif);font-size:18px;font-weight:600;line-height:1.3;color:var(--sumi);}
+  #lumik-lb .llb-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;}
+  #lumik-lb .llb-price{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--sumi);}
+  #lumik-lb .llb-add{background:var(--sumi);color:var(--washi);border:none;padding:12px 22px;font-family:var(--sans);
+            font-size:13px;font-weight:500;letter-spacing:.04em;cursor:pointer;border-radius:2px;transition:background .2s;}
+  #lumik-lb .llb-add:hover{background:var(--shu);}
+  html[data-theme="sumi"] #lumik-lb .llb-visual{background:linear-gradient(150deg,#221E16,#1A1711);}
+  html[data-theme="sumi"] #lumik-lb .llb-add{background:var(--shu);color:#161410;}
+  html[data-theme="sumi"] #lumik-lb .llb-add:hover{background:#E2805F;}
+  @media(prefers-reduced-motion:reduce){#lumik-lb,#lumik-lb .llb-card{transition:none;}}
+</style>
+<!-- ===== SEO / méta (remplace lumik.fr par ton domaine réel) ===== -->
+<meta name="description" content="Couteaux de Seki, céramique et papier washi sourcés directement chez les ateliers du Japon — sans intermédiaire ni marge cachée. Livraison offerte dès 50€.">
+<link rel="canonical" href="https://lumik.fr/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lumik">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="灯 LUMIK — Artisanat japonais, direct de la source">
+<meta property="og:description" content="Couteaux de Seki, céramique, papier washi. Achetés à l'atelier, sans intermédiaire.">
+<meta property="og:url" content="https://lumik.fr/">
+<meta property="og:image" content="https://lumik.fr/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- ===== JSON-LD statique (rendu serveur, pas injecté en JS) ===== -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"https://lumik.fr/#organization",
+      "name":"Lumik",
+      "url":"https://lumik.fr",
+      "logo":{"@type":"ImageObject","url":"https://lumik.fr/logo.png","width":512,"height":512},
+      "description":"Objets artisanaux japonais sourcés directement chez les ateliers de Seki, Tokyo et Kyoto, sans intermédiaire ni marge cachée.",
+      "slogan":"Direct de la source",
+      "knowsAbout":["couteaux japonais","coutellerie de Seki","céramique japonaise","papier washi","artisanat japonais"],
+      "contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":["French"]},
+      "sameAs":["https://www.instagram.com/lumik","https://www.youtube.com/@lumik"]
+    },
+    {
+      "@type":"WebSite",
+      "@id":"https://lumik.fr/#website",
+      "url":"https://lumik.fr",
+      "name":"Lumik",
+      "publisher":{"@id":"https://lumik.fr/#organization"},
+      "inLanguage":"fr-FR",
+      "potentialAction":{
+        "@type":"SearchAction",
+        "target":{"@type":"EntryPoint","urlTemplate":"https://lumik.fr/catalogue?q={search_term_string}"},
+        "query-input":"required name=search_term_string"
+      }
+    },
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Accueil","item":"https://lumik.fr/"},
+        {"@type":"ListItem","position":2,"name":"Catalogue","item":"https://lumik.fr/catalogue"}
+      ]
+    },
+    {
+      "@type":"Product",
+      "@id":"https://lumik.fr/couteau-santoku-seki/#product",
+      "name":"Couteau Santoku Seki",
+      "image":["https://lumik.fr/img/santoku.jpg"],
+      "description":"Couteau Santoku forgé à Seki, capitale historique de la coutellerie japonaise. Acheté directement à l'atelier, sans intermédiaire.",
+      "category":"Couteaux de cuisine japonais",
+      "countryOfOrigin":"JP",
+      "brand":{"@type":"Brand","name":"Lumik"},
+      "offers":{
+        "@type":"Offer",
+        "url":"https://lumik.fr/couteau-santoku-seki",
+        "priceCurrency":"EUR","price":"52.00",
+        "availability":"https://schema.org/InStock",
+        "itemCondition":"https://schema.org/NewCondition",
+        "seller":{"@id":"https://lumik.fr/#organization"},
+        "hasMerchantReturnPolicy":{
+          "@type":"MerchantReturnPolicy","applicableCountry":"FR",
+          "returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays":14,
+          "returnMethod":"https://schema.org/ReturnByMail",
+          "returnFees":"https://schema.org/FreeReturn"
+        },
+        "shippingDetails":{
+          "@type":"OfferShippingDetails",
+          "shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"EUR"},
+          "shippingDestination":{"@type":"DefinedRegion","addressCountry":"FR"},
+          "deliveryTime":{"@type":"ShippingDeliveryTime",
+            "handlingTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":2,"unitCode":"DAY"},
+            "transitTime":{"@type":"QuantitativeValue","minValue":5,"maxValue":9,"unitCode":"DAY"}}
+        }
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div id="banner">Livraison offerte dès 50€ · Direct des ateliers du Japon</div>
+
+<nav id="nav">
+  <div class="brand"><span class="lamp">灯</span> LUMIK</div>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#/catalogue">Catalogue</a>
+      <a href="#/">La maison</a>
+    </div>
+    <button class="nav-ico" onclick="toggleDrawer()" title="Panier">🛒<span id="cartCount" style="display:none">0</span></button>
+  </div>
+</nav>
+<input type="file" id="csvInput" accept=".csv,text/csv" style="display:none" onchange="importCSV(event)">
+
+<main id="home" class="page">
+<section id="hero">
+  <div class="tate">灯をともす</div>
+  <div class="hero-lamp">灯</div>
+  <div class="eyebrow">Seki · Tokyo · Kyoto</div>
+  <h1>Des objets bien faits, choisis un à un, venus directement du Japon.</h1>
+  <p class="sub">Couteaux, céramique, papier washi. Sélectionnés chez les artisans, sans intermédiaire ni marge cachée.</p>
+  <button class="hero-cta" onclick="location.hash='#/catalogue'">Voir le catalogue <span class="arr">→</span></button>
+</section>
+
+<section id="pillars">
+  <div class="pillar"><div class="kj">直</div><div class="pt">Direct de la source</div><div class="pd">Seki, Tokyo, Kyoto. Achetés aux ateliers, sans revendeur.</div></div>
+  <div class="pillar"><div class="kj">選</div><div class="pt">Sélection serrée</div><div class="pd">Chaque pièce choisie et tenue à l'usage. Rien au hasard.</div></div>
+  <div class="pillar"><div class="kj">安</div><div class="pt">Prix honnête</div><div class="pd">Le juste prix, affiché clair. Aucune marge dissimulée.</div></div>
+</section>
+
+<section class="sec featured">
+  <div class="sec-head"><span class="jp">人気</span><h2>Les plus choisis</h2><p>Trois pièces qui partent en premier. Ajoutez-les, le panier vous suit jusqu'au catalogue.</p></div>
+  <div class="mini-grid" id="featured"></div>
+  <div class="sec-cta"><button class="hero-cta" onclick="location.hash='#/catalogue'">Tout le catalogue <span class="arr">→</span></button></div>
+</section>
+
+<section class="origins">
+  <div class="sec-head"><span class="jp">産地</span><h2>D'où ça vient</h2></div>
+  <div class="origin"><div class="ok">関</div><div><div class="otitle">Seki — la ville des lames</div><div class="odesc">700 ans de forge. Nos couteaux sortent des mêmes ateliers que ceux des chefs, achetés à la source.</div></div></div>
+  <div class="origin"><div class="ok">東</div><div><div class="otitle">Tokyo — les ustensiles du quotidien</div><div class="odesc">Les outils que les cuisines japonaises utilisent vraiment. Pensés pour durer, pas pour la vitrine.</div></div></div>
+  <div class="origin"><div class="ok">京</div><div><div class="otitle">Kyoto — la déco et le papier</div><div class="odesc">Céramique, washi, laque. La main de l'artisan se voit, et c'est ce qu'on cherche.</div></div></div>
+</section>
+
+<section class="geo-sec">
+  <h3>Pourquoi un couteau de Seki coûte-t-il plus cher ?</h3>
+  <div class="geo-block">
+    <p>Seki, dans la préfecture de Gifu, forge des lames depuis plus de sept siècles : c'est la capitale historique de la coutellerie japonaise. Un couteau qui en vient associe un acier dur à une géométrie fine, qui tient le fil plus longtemps qu'une lame européenne standard. Lumik achète ces couteaux directement à l'atelier qui les forge, sans grossiste ni importateur intermédiaire. Concrètement, cela retire deux à trois marges de la chaîne : le prix payé correspond au travail de l'artisan et à la logistique, pas à une cascade de revendeurs. La contrepartie pour l'acheteur est un délai d'expédition depuis le Japon de cinq à neuf jours, et un entretien simple — sécher la lame après usage — pour préserver le tranchant dans le temps.</p>
+  </div>
+</section>
+
+<section class="sec reviews">
+  <div class="stars">★★★★★</div>
+  <div class="rscore">4,9 / 5 · plus de 1 200 commandes livrées</div>
+  <div class="rgrid">
+    <div class="rcard"><div class="rq">« Le couteau Seki coupe mieux que tout ce que j'avais. On sent la différence dès la première tomate. »</div><div class="ra">— Camille R., Lyon</div></div>
+    <div class="rcard"><div class="rq">« Emballage soigné, livraison rapide, et les prix sont honnêtes pour de l'artisanat direct. »</div><div class="ra">— Thomas G., Bruxelles</div></div>
+    <div class="rcard"><div class="rq">« Le bol Arita est encore plus beau en vrai. J'ai recommandé deux fois depuis. »</div><div class="ra">— Léa M., Nantes</div></div>
+  </div>
+</section>
+
+<section class="guarantees">
+  <div class="guar"><div class="gi">🚚</div><div class="gt">Livraison offerte</div><div class="gd">Dès 50€ d'achat</div></div>
+  <div class="guar"><div class="gi">🔒</div><div class="gt">Paiement sécurisé</div><div class="gd">Commande via WhatsApp</div></div>
+  <div class="guar"><div class="gi">🏯</div><div class="gt">Direct atelier</div><div class="gd">Sans intermédiaire</div></div>
+  <div class="guar"><div class="gi">↩️</div><div class="gt">Retours 14 jours</div><div class="gd">Satisfait ou remboursé</div></div>
+</section>
+
+<section class="final">
+  <div class="fc-jp">灯</div>
+  <h2>Un bel objet, choisi pour durer.</h2>
+  <button class="hero-cta" onclick="location.hash='#/catalogue'">Voir le catalogue <span class="arr">→</span></button>
+</section>
+</main>
+
+<main id="catalogue" class="page">
+<div class="cat-top"><button class="back-btn" onclick="location.hash='#/'">← Accueil</button></div>
+<section id="cat">
+  <div class="cat-head"><h2>Le catalogue</h2><span class="ct-jp">品揃え</span></div>
+  <div id="status"></div>
+  <div id="grid"></div>
+</section>
+</main>
+
+<main id="confirmation" class="page">
+<div class="cat-top"><button class="back-btn" onclick="location.hash='#/'">← Accueil</button></div>
+<section id="conf">
+  <div class="cat-head"><h2>Commande confirmée</h2><span class="ct-jp">注文</span></div>
+  <div id="conf-content">
+    <p>Merci pour votre commande ! Un email de confirmation a été envoyé.</p>
+    <div id="conf-items"></div>
+    <div id="conf-total" style="margin-top:20px;font-size:18px;font-weight:700;"></div>
+    <button class="hero-cta" onclick="location.hash='#/catalogue'" style="margin-top:30px;">Continuer vos achats →</button>
+  </div>
+</section>
+</main>
+
+<main id="admin" class="page" style="display:none;">
+<div class="cat-top"><button class="back-btn" onclick="location.hash='#/'">← Accueil</button></div>
+<section id="admin-sec" style="padding:30px 20px;max-width:800px;margin:0 auto;">
+  <div class="cat-head"><h2>Tableau de bord</h2><span class="ct-jp">管理</span></div>
+  <div id="admin-content">
+    <p>Chargement des commandes...</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-lamp"><span>灯</span> LUMIK</div>
+  <div class="f-line">Artisanat japonais, direct de l'atelier.</div>
+  <div class="f-cities">Seki, couteaux · Tokyo, ustensiles · Kyoto, déco &amp; papier</div>
+  <button onclick="document.getElementById('csvInput').click()" style="margin-top:18px;background:none;border:1px solid #4a463f;color:#8C857A;font-family:var(--sans);font-size:11px;letter-spacing:.05em;padding:8px 16px;border-radius:2px;cursor:pointer;">Importer le catalogue (CSV)</button>
+</footer>
+
+<div id="overlay" onclick="toggleDrawer()"></div>
+<aside id="drawer" aria-label="Panier">
+  <div class="d-head"><span class="t">Panier 籠</span><button class="d-close" onclick="toggleDrawer()" aria-label="Fermer">✕</button></div>
+  <div id="progress"><span id="progText">Ajoutez 50€ pour la livraison offerte</span><div id="progBar"><div id="progFill"></div></div></div>
+  <div id="items"><div class="empty">Votre panier est vide.</div></div>
+  <div class="d-foot">
+    <div class="d-total"><span class="tl">SOUS-TOTAL</span><span class="tv" id="total">0€</span></div>
+    <button id="checkout" onclick="checkout()">Commander via WhatsApp</button>
+  </div>
+</aside>
+
+<script>
+  // ───── THÈME : change le mot, ou ajoute ?theme=vert à l'URL ─────
+  const THEME = 'sumi'; // 'base' | 'indigo' | 'vert' | 'sumi'
+  (function(){
+    const p = new URLSearchParams(location.search).get('theme');
+    const t = p || THEME;
+    if(t && t!=='base') document.documentElement.dataset.theme = t;
+  })();
+
+  const SEUIL = 50;
+  const WHATSAPP = '33759876727';
+  const LEMON_STORE_ID = 'TBD'; // À remplacer par ton Store ID
+  const LEMON_PRODUCT_ID = 'TBD'; // À remplacer par ton Product ID
+  const KEY_PROD = 'lumik_produits';
+  const KEY_CART = 'lumik_panier';
+  const KEY_VERSION = 'lumik_catalog_version';
+  const CATALOG_VERSION = 'v250-3'; // ↑ incrémenter à chaque changement de produitsDefaut pour purger le cache navigateur
+
+  const produitsDefaut = [{"id": 1, "nom": "Lampe Akari papier blanc", "emoji": "💡", "prix_vente_eur": 68, "img": "https://picsum.photos/seed/lumik1/300/300"}, {"id": 2, "nom": "Andon lanterne bois clair", "emoji": "🏮", "prix_vente_eur": 85, "img": "https://picsum.photos/seed/lumik2/300/300"}, {"id": 3, "nom": "Chochin lanterne rouge", "emoji": "🏮", "prix_vente_eur": 92, "img": "https://picsum.photos/seed/lumik3/300/300"}, {"id": 4, "nom": "Lampe Akari demi-lune", "emoji": "💡", "prix_vente_eur": 72, "img": "https://picsum.photos/seed/lumik4/300/300"}, {"id": 5, "nom": "Yuki lanterne neige", "emoji": "⛄", "prix_vente_eur": 78, "img": "https://picsum.photos/seed/lumik5/300/300"}, {"id": 6, "nom": "Lampe papier ivoire Soji", "emoji": "💡", "prix_vente_eur": 65, "img": "https://picsum.photos/seed/lumik6/300/300"}, {"id": 7, "nom": "Chochin lanterne bleu indigo", "emoji": "🔵", "prix_vente_eur": 88, "img": "https://picsum.photos/seed/lumik7/300/300"}, {"id": 8, "nom": "Akari boule papier", "emoji": "🔴", "prix_vente_eur": 75, "img": "https://picsum.photos/seed/lumik8/300/300"}, {"id": 9, "nom": "Lanterne géométrique bois", "emoji": "🏮", "prix_vente_eur": 95, "img": "https://picsum.photos/seed/lumik9/300/300"}, {"id": 10, "nom": "Lampe Akari cylindre", "emoji": "💡", "prix_vente_eur": 70, "img": "https://picsum.photos/seed/lumik10/300/300"}, {"id": 11, "nom": "Chochin minimaliste blanc", "emoji": "⚪", "prix_vente_eur": 82, "img": "https://picsum.photos/seed/lumik11/300/300"}, {"id": 12, "nom": "Yuki lanterne épurée", "emoji": "⛄", "prix_vente_eur": 76, "img": "https://picsum.photos/seed/lumik12/300/300"}, {"id": 13, "nom": "Lampe papier noir Akari", "emoji": "🖤", "prix_vente_eur": 69, "img": "https://picsum.photos/seed/lumik13/300/300"}, {"id": 14, "nom": "Chochin lanterne rouge vif", "emoji": "🔴", "prix_vente_eur": 90, "img": "https://picsum.photos/seed/lumik14/300/300"}, {"id": 15, "nom": "Lanterne suspendue washi", "emoji": "🏮", "prix_vente_eur": 98, "img": "https://picsum.photos/seed/lumik15/300/300"}, {"id": 16, "nom": "Akari papier naturel", "emoji": "💡", "prix_vente_eur": 72, "img": "https://picsum.photos/seed/lumik16/300/300"}, {"id": 17, "nom": "Lanterne bois laqué noir", "emoji": "🖤", "prix_vente_eur": 105, "img": "https://picsum.photos/seed/lumik17/300/300"}, {"id": 18, "nom": "Chochin demi-boule papier", "emoji": "⭕", "prix_vente_eur": 86, "img": "https://picsum.photos/seed/lumik18/300/300"}, {"id": 19, "nom": "Lampe Akari petit format", "emoji": "💡", "prix_vente_eur": 58, "img": "https://picsum.photos/seed/lumik19/300/300"}, {"id": 20, "nom": "Yuki lanterne givre", "emoji": "⛄", "prix_vente_eur": 81, "img": "https://picsum.photos/seed/lumik20/300/300"}, {"id": 21, "nom": "Lanterne géométrique papier", "emoji": "🏮", "prix_vente_eur": 93, "img": "https://picsum.photos/seed/lumik21/300/300"}, {"id": 22, "nom": "Akari boule grande", "emoji": "🔴", "prix_vente_eur": 79, "img": "https://picsum.photos/seed/lumik22/300/300"}, {"id": 23, "nom": "Chochin lanterne soie dorée", "emoji": "✨", "prix_vente_eur": 112, "img": "https://picsum.photos/seed/lumik23/300/300"}, {"id": 24, "nom": "Lampe papier beige clair", "emoji": "💡", "prix_vente_eur": 68, "img": "https://picsum.photos/seed/lumik24/300/300"}, {"id": 25, "nom": "Yuki lanterne sculptée", "emoji": "⛄", "prix_vente_eur": 89, "img": "https://picsum.photos/seed/lumik25/300/300"}, {"id": 26, "nom": "Lanterne bois blanc ivoire", "emoji": "⚪", "prix_vente_eur": 102, "img": "https://picsum.photos/seed/lumik26/300/300"}, {"id": 27, "nom": "Akari papier teint", "emoji": "🎨", "prix_vente_eur": 75, "img": "https://picsum.photos/seed/lumik27/300/300"}, {"id": 28, "nom": "Chochin minimaliste noir", "emoji": "🖤", "prix_vente_eur": 87, "img": "https://picsum.photos/seed/lumik28/300/300"}, {"id": 29, "nom": "Lampe Akari cylindre long", "emoji": "💡", "prix_vente_eur": 73, "img": "https://picsum.photos/seed/lumik29/300/300"}, {"id": 30, "nom": "Yuki lanterne cristal", "emoji": "✨", "prix_vente_eur": 94, "img": "https://picsum.photos/seed/lumik30/300/300"}, {"id": 31, "nom": "Lanterne suspendue bois", "emoji": "🏮", "prix_vente_eur": 108, "img": "https://picsum.photos/seed/lumik31/300/300"}, {"id": 32, "nom": "Akari papier crème", "emoji": "💡", "prix_vente_eur": 70, "img": "https://picsum.photos/seed/lumik32/300/300"}, {"id": 33, "nom": "Chochin lanterne claire", "emoji": "⭕", "prix_vente_eur": 84, "img": "https://picsum.photos/seed/lumik33/300/300"}, {"id": 34, "nom": "Lampe Akari demi-sphère", "emoji": "💡", "prix_vente_eur": 77, "img": "https://picsum.photos/seed/lumik34/300/300"}, {"id": 35, "nom": "Yuki lanterne fine", "emoji": "⛄", "prix_vente_eur": 80, "img": "https://picsum.photos/seed/lumik35/300/300"}, {"id": 36, "nom": "Lanterne géométrique blanc", "emoji": "⚪", "prix_vente_eur": 99, "img": "https://picsum.photos/seed/lumik36/300/300"}, {"id": 37, "nom": "Akari boule matte", "emoji": "🔴", "prix_vente_eur": 74, "img": "https://picsum.photos/seed/lumik37/300/300"}, {"id": 38, "nom": "Chochin lanterne rose", "emoji": "🌸", "prix_vente_eur": 88, "img": "https://picsum.photos/seed/lumik38/300/300"}, {"id": 39, "nom": "Lampe papier rose poudré", "emoji": "🌸", "prix_vente_eur": 71, "img": "https://picsum.photos/seed/lumik39/300/300"}, {"id": 40, "nom": "Yuki lanterne étoile", "emoji": "⭐", "prix_vente_eur": 85, "img": "https://picsum.photos/seed/lumik40/300/300"}, {"id": 41, "nom": "Lanterne papier violet", "emoji": "💜", "prix_vente_eur": 80, "img": "https://picsum.photos/seed/lumik41/300/300"}, {"id": 42, "nom": "Akari papier veiné", "emoji": "🎨", "prix_vente_eur": 76, "img": "https://picsum.photos/seed/lumik42/300/300"}, {"id": 43, "nom": "Chochin lanterne orange", "emoji": "🟠", "prix_vente_eur": 89, "img": "https://picsum.photos/seed/lumik43/300/300"}, {"id": 44, "nom": "Lampe Akari trapézoïdale", "emoji": "💡", "prix_vente_eur": 78, "img": "https://picsum.photos/seed/lumik44/300/300"}, {"id": 45, "nom": "Yuki lanterne gravée", "emoji": "⛄", "prix_vente_eur": 87, "img": "https://picsum.photos/seed/lumik45/300/300"}, {"id": 46, "nom": "Lanterne bois très épais", "emoji": "🏮", "prix_vente_eur": 115, "img": "https://picsum.photos/seed/lumik46/300/300"}, {"id": 47, "nom": "Akari papier gris", "emoji": "🩶", "prix_vente_eur": 72, "img": "https://picsum.photos/seed/lumik47/300/300"}, {"id": 48, "nom": "Chochin lanterne turquoise", "emoji": "🔷", "prix_vente_eur": 91, "img": "https://picsum.photos/seed/lumik48/300/300"}, {"id": 49, "nom": "Lampe papier très fin", "emoji": "💡", "prix_vente_eur": 62, "img": "https://picsum.photos/seed/lumik49/300/300"}, {"id": 50, "nom": "Yuki lanterne carrée", "emoji": "⛄", "prix_vente_eur": 86, "img": "https://picsum.photos/seed/lumik50/300/300"}, {"id": 51, "nom": "Lanterne bois vernis", "emoji": "🏮", "prix_vente_eur": 110, "img": "https://picsum.photos/seed/lumik51/300/300"}, {"id": 52, "nom": "Akari papier épais", "emoji": "💡", "prix_vente_eur": 74, "img": "https://picsum.photos/seed/lumik52/300/300"}, {"id": 53, "nom": "Chochin lanterne corail", "emoji": "🪸", "prix_vente_eur": 90, "img": "https://picsum.photos/seed/lumik53/300/300"}, {"id": 54, "nom": "Lampe Akari pyramide", "emoji": "💡", "prix_vente_eur": 75, "img": "https://picsum.photos/seed/lumik54/300/300"}, {"id": 55, "nom": "Yuki lanterne ajourée", "emoji": "⛄", "prix_vente_eur": 92, "img": "https://picsum.photos/seed/lumik55/300/300"}, {"id": 56, "nom": "Lanterne suspendue laquée", "emoji": "🏮", "prix_vente_eur": 120, "img": "https://picsum.photos/seed/lumik56/300/300"}, {"id": 57, "nom": "Akari papier couleur douce", "emoji": "🎨", "prix_vente_eur": 73, "img": "https://picsum.photos/seed/lumik57/300/300"}, {"id": 58, "nom": "Chochin lanterne lilas", "emoji": "💜", "prix_vente_eur": 88, "img": "https://picsum.photos/seed/lumik58/300/300"}, {"id": 59, "nom": "Lampe papier très translucide", "emoji": "💡", "prix_vente_eur": 64, "img": "https://picsum.photos/seed/lumik59/300/300"}, {"id": 60, "nom": "Yuki lanterne hexagon", "emoji": "⛄", "prix_vente_eur": 88, "img": "https://picsum.photos/seed/lumik60/300/300"}, {"id": 61, "nom": "Tenugui coton basique", "emoji": "🧣", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik61/300/300"}, {"id": 62, "nom": "Tenugui imprimé motif", "emoji": "🎨", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik62/300/300"}, {"id": 63, "nom": "Tenugui géométrique", "emoji": "🔷", "prix_vente_eur": 15, "img": "https://picsum.photos/seed/lumik63/300/300"}, {"id": 64, "nom": "Tenugui floral Kyoto", "emoji": "🌸", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik64/300/300"}, {"id": 65, "nom": "Tenugui indigo foncé", "emoji": "🔵", "prix_vente_eur": 17, "img": "https://picsum.photos/seed/lumik65/300/300"}, {"id": 66, "nom": "Tenugui soie lisse", "emoji": "✨", "prix_vente_eur": 22, "img": "https://picsum.photos/seed/lumik66/300/300"}, {"id": 67, "nom": "Furoshiki petit coton", "emoji": "🎁", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik67/300/300"}, {"id": 68, "nom": "Furoshiki moyen 70cm", "emoji": "🎁", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik68/300/300"}, {"id": 69, "nom": "Furoshiki grand 100cm", "emoji": "🎁", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik69/300/300"}, {"id": 70, "nom": "Furoshiki soie légère", "emoji": "✨", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik70/300/300"}, {"id": 71, "nom": "Furoshiki lin épais", "emoji": "📦", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik71/300/300"}, {"id": 72, "nom": "Furoshiki motifs géométrique", "emoji": "🔷", "prix_vente_eur": 26, "img": "https://picsum.photos/seed/lumik72/300/300"}, {"id": 73, "nom": "Furoshiki indigo teint", "emoji": "🔵", "prix_vente_eur": 30, "img": "https://picsum.photos/seed/lumik73/300/300"}, {"id": 74, "nom": "Noren tissu épais lin", "emoji": "🎭", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik74/300/300"}, {"id": 75, "nom": "Noren coton fin aéré", "emoji": "🎨", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik75/300/300"}, {"id": 76, "nom": "Noren soie motif kanji", "emoji": "🎭", "prix_vente_eur": 62, "img": "https://picsum.photos/seed/lumik76/300/300"}, {"id": 77, "nom": "Noren chanvre naturel", "emoji": "📦", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik77/300/300"}, {"id": 78, "nom": "Noren coloré Kyoto", "emoji": "🌈", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik78/300/300"}, {"id": 79, "nom": "Noren indigo traditionnel", "emoji": "🔵", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik79/300/300"}, {"id": 80, "nom": "Tabi coton fin", "emoji": "🧦", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik80/300/300"}, {"id": 81, "nom": "Tabi coton épais chaud", "emoji": "🧦", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik81/300/300"}, {"id": 82, "nom": "Tabi soie légère", "emoji": "✨", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik82/300/300"}, {"id": 83, "nom": "Tabi motif géométrique", "emoji": "🔷", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik83/300/300"}, {"id": 84, "nom": "Tabi coton blanc simple", "emoji": "⚪", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik84/300/300"}, {"id": 85, "nom": "Tabi indigo très foncé", "emoji": "🔵", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik85/300/300"}, {"id": 86, "nom": "Tabi enfant petit", "emoji": "👶", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik86/300/300"}, {"id": 87, "nom": "Haori veste courte coton", "emoji": "👘", "prix_vente_eur": 68, "img": "https://picsum.photos/seed/lumik87/300/300"}, {"id": 88, "nom": "Haori soie motif", "emoji": "👘", "prix_vente_eur": 95, "img": "https://picsum.photos/seed/lumik88/300/300"}, {"id": 89, "nom": "Happi veste festival", "emoji": "👘", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik89/300/300"}, {"id": 90, "nom": "Furoshiki pochette revers", "emoji": "📦", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik90/300/300"}, {"id": 91, "nom": "Obi ceinture coton", "emoji": "🎀", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik91/300/300"}, {"id": 92, "nom": "Obi soie damas", "emoji": "🎀", "prix_vente_eur": 72, "img": "https://picsum.photos/seed/lumik92/300/300"}, {"id": 93, "nom": "Yukata coton léger", "emoji": "👘", "prix_vente_eur": 58, "img": "https://picsum.photos/seed/lumik93/300/300"}, {"id": 94, "nom": "Yukata enfant", "emoji": "👶", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik94/300/300"}, {"id": 95, "nom": "Hanari ceinture tissée", "emoji": "🎀", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik95/300/300"}, {"id": 96, "nom": "Kimono courte soie", "emoji": "👘", "prix_vente_eur": 125, "img": "https://picsum.photos/seed/lumik96/300/300"}, {"id": 97, "nom": "Châle coton léger", "emoji": "🧣", "prix_vente_eur": 34, "img": "https://picsum.photos/seed/lumik97/300/300"}, {"id": 98, "nom": "Châle soie fine", "emoji": "✨", "prix_vente_eur": 58, "img": "https://picsum.photos/seed/lumik98/300/300"}, {"id": 99, "nom": "Écharpe coton motif", "emoji": "🧣", "prix_vente_eur": 26, "img": "https://picsum.photos/seed/lumik99/300/300"}, {"id": 100, "nom": "Écharpe soie satinée", "emoji": "✨", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik100/300/300"}, {"id": 101, "nom": "Accessoire cheveux kimono", "emoji": "💐", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik101/300/300"}, {"id": 102, "nom": "Barrette sakura", "emoji": "🌸", "prix_vente_eur": 15, "img": "https://picsum.photos/seed/lumik102/300/300"}, {"id": 103, "nom": "Pince cheveux laquée", "emoji": "💄", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik103/300/300"}, {"id": 104, "nom": "Nœud papillon doré", "emoji": "✨", "prix_vente_eur": 22, "img": "https://picsum.photos/seed/lumik104/300/300"}, {"id": 105, "nom": "Baguettes Hashi bois", "emoji": "🥢", "prix_vente_eur": 8, "img": "https://picsum.photos/seed/lumik105/300/300"}, {"id": 106, "nom": "Baguettes Hashi dorées", "emoji": "✨", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik106/300/300"}, {"id": 107, "nom": "Baguettes laquées rouges", "emoji": "🔴", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik107/300/300"}, {"id": 108, "nom": "Baguettes mère-perle", "emoji": "💎", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik108/300/300"}, {"id": 109, "nom": "Baguettes porcelaine", "emoji": "🥢", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik109/300/300"}, {"id": 110, "nom": "Repose-baguette laqué", "emoji": "🏠", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik110/300/300"}, {"id": 111, "nom": "Couteau Seki petit", "emoji": "🔪", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik111/300/300"}, {"id": 112, "nom": "Couteau chef Seki moyen", "emoji": "🔪", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik112/300/300"}, {"id": 113, "nom": "Couteau Seki grand", "emoji": "🔪", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik113/300/300"}, {"id": 114, "nom": "Couteau dentelé Seki", "emoji": "🔪", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik114/300/300"}, {"id": 115, "nom": "Couteau désosser Seki", "emoji": "🔪", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik115/300/300"}, {"id": 116, "nom": "Couteau nakiri Seki", "emoji": "🔪", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik116/300/300"}, {"id": 117, "nom": "Couteau santoku Seki", "emoji": "🔪", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik117/300/300"}, {"id": 118, "nom": "Épluche-légumes Seki", "emoji": "🥕", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik118/300/300"}, {"id": 119, "nom": "Couteau à pain Seki", "emoji": "🍞", "prix_vente_eur": 34, "img": "https://picsum.photos/seed/lumik119/300/300"}, {"id": 120, "nom": "Ciseaux cuisine Seki", "emoji": "✂️", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik120/300/300"}, {"id": 121, "nom": "Sensu éventail papier", "emoji": "🪮", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik121/300/300"}, {"id": 122, "nom": "Sensu soie motif", "emoji": "🪮", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik122/300/300"}, {"id": 123, "nom": "Sensu bois laqué", "emoji": "🎨", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik123/300/300"}, {"id": 124, "nom": "Sensu plié", "emoji": "🎭", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik124/300/300"}, {"id": 125, "nom": "Sensu ajouré", "emoji": "✨", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik125/300/300"}, {"id": 126, "nom": "Maneki-neko charm", "emoji": "🐱", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik126/300/300"}, {"id": 127, "nom": "Maneki-neko doré", "emoji": "✨", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik127/300/300"}, {"id": 128, "nom": "Maneki-neko blanc", "emoji": "⚪", "prix_vente_eur": 15, "img": "https://picsum.photos/seed/lumik128/300/300"}, {"id": 129, "nom": "Maneki-neko rouge", "emoji": "🔴", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik129/300/300"}, {"id": 130, "nom": "Daruma mini rouge", "emoji": "🔴", "prix_vente_eur": 8, "img": "https://picsum.photos/seed/lumik130/300/300"}, {"id": 131, "nom": "Daruma moyen", "emoji": "🔴", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik131/300/300"}, {"id": 132, "nom": "Daruma noir", "emoji": "🖤", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik132/300/300"}, {"id": 133, "nom": "Kokeshi poupée", "emoji": "🎁", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik133/300/300"}, {"id": 134, "nom": "Kokeshi grande", "emoji": "🎭", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik134/300/300"}, {"id": 135, "nom": "Kokeshi motif floral", "emoji": "🌸", "prix_vente_eur": 22, "img": "https://picsum.photos/seed/lumik135/300/300"}, {"id": 136, "nom": "Petit miroir Kyoto", "emoji": "🪞", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik136/300/300"}, {"id": 137, "nom": "Miroir bois laqué", "emoji": "🪞", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik137/300/300"}, {"id": 138, "nom": "Miroir portatif", "emoji": "🪞", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik138/300/300"}, {"id": 139, "nom": "Boîte laque", "emoji": "🎨", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik139/300/300"}, {"id": 140, "nom": "Boîte joyau laquée", "emoji": "💎", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik140/300/300"}, {"id": 141, "nom": "Plateau laqué noir", "emoji": "🖤", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik141/300/300"}, {"id": 142, "nom": "Plateau laqué rouge", "emoji": "🔴", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik142/300/300"}, {"id": 143, "nom": "Plateau bois brut", "emoji": "📦", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik143/300/300"}, {"id": 144, "nom": "Plateau doré", "emoji": "✨", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik144/300/300"}, {"id": 145, "nom": "Mortier suribachi", "emoji": "🥣", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik145/300/300"}, {"id": 146, "nom": "Mortier bois", "emoji": "🥄", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik146/300/300"}, {"id": 147, "nom": "Mortier céramique", "emoji": "🍲", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik147/300/300"}, {"id": 148, "nom": "Zen sand kit", "emoji": "🏜️", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik148/300/300"}, {"id": 149, "nom": "Papier washi fin", "emoji": "📜", "prix_vente_eur": 6, "img": "https://picsum.photos/seed/lumik149/300/300"}, {"id": 150, "nom": "Papier washi épais", "emoji": "📜", "prix_vente_eur": 10, "img": "https://picsum.photos/seed/lumik150/300/300"}, {"id": 151, "nom": "Papier washi couleur", "emoji": "🎨", "prix_vente_eur": 8, "img": "https://picsum.photos/seed/lumik151/300/300"}, {"id": 152, "nom": "Papier washi or", "emoji": "✨", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik152/300/300"}, {"id": 153, "nom": "Papier washi bleu", "emoji": "🔵", "prix_vente_eur": 9, "img": "https://picsum.photos/seed/lumik153/300/300"}, {"id": 154, "nom": "Papier washi rouge", "emoji": "🔴", "prix_vente_eur": 9, "img": "https://picsum.photos/seed/lumik154/300/300"}, {"id": 155, "nom": "Papier washi motif", "emoji": "🎨", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik155/300/300"}, {"id": 156, "nom": "Incense Kyoto", "emoji": "🌸", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik156/300/300"}, {"id": 157, "nom": "Encens floral", "emoji": "💐", "prix_vente_eur": 15, "img": "https://picsum.photos/seed/lumik157/300/300"}, {"id": 158, "nom": "Encens bois", "emoji": "🌳", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik158/300/300"}, {"id": 159, "nom": "Encens premium", "emoji": "✨", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik159/300/300"}, {"id": 160, "nom": "Tawashi naturel", "emoji": "🧹", "prix_vente_eur": 6, "img": "https://picsum.photos/seed/lumik160/300/300"}, {"id": 161, "nom": "Tawashi loofah", "emoji": "🧹", "prix_vente_eur": 10, "img": "https://picsum.photos/seed/lumik161/300/300"}, {"id": 162, "nom": "Binchotan charbon", "emoji": "⚫", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik162/300/300"}, {"id": 163, "nom": "Shamoji bois simple", "emoji": "🥄", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik163/300/300"}, {"id": 164, "nom": "Shamoji laqué rouge", "emoji": "🔴", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik164/300/300"}, {"id": 165, "nom": "Shamoji motif", "emoji": "🎨", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik165/300/300"}, {"id": 166, "nom": "Chawan Arita bleu", "emoji": "🍵", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik166/300/300"}, {"id": 167, "nom": "Chawan Arita blanc", "emoji": "⚪", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik167/300/300"}, {"id": 168, "nom": "Chawan Arita rouge", "emoji": "🔴", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik168/300/300"}, {"id": 169, "nom": "Yunomi simple", "emoji": "☕", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik169/300/300"}, {"id": 170, "nom": "Yunomi gris cendré", "emoji": "🩶", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik170/300/300"}, {"id": 171, "nom": "Kyusu théière", "emoji": "🫖", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik171/300/300"}, {"id": 172, "nom": "Kyusu noire fonte", "emoji": "⚫", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik172/300/300"}, {"id": 173, "nom": "Bento Arita", "emoji": "🍱", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik173/300/300"}, {"id": 174, "nom": "Bento laqué rouge", "emoji": "🔴", "prix_vente_eur": 58, "img": "https://picsum.photos/seed/lumik174/300/300"}, {"id": 175, "nom": "Donabe terre cuite", "emoji": "🍲", "prix_vente_eur": 72, "img": "https://picsum.photos/seed/lumik175/300/300"}, {"id": 176, "nom": "Donabe petite", "emoji": "🍲", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik176/300/300"}, {"id": 177, "nom": "Tetsubin noir", "emoji": "🫖", "prix_vente_eur": 88, "img": "https://picsum.photos/seed/lumik177/300/300"}, {"id": 178, "nom": "Tetsubin bleu", "emoji": "🔵", "prix_vente_eur": 98, "img": "https://picsum.photos/seed/lumik178/300/300"}, {"id": 179, "nom": "Accessoire zen", "emoji": "🌾", "prix_vente_eur": 22, "img": "https://picsum.photos/seed/lumik179/300/300"}, {"id": 180, "nom": "Petit panier", "emoji": "🧺", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik180/300/300"}, {"id": 181, "nom": "Panier laqué", "emoji": "📦", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik181/300/300"}, {"id": 182, "nom": "Petit coffret bois", "emoji": "🎁", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik182/300/300"}, {"id": 183, "nom": "Signet papier", "emoji": "📚", "prix_vente_eur": 6, "img": "https://picsum.photos/seed/lumik183/300/300"}, {"id": 184, "nom": "Signet soie", "emoji": "✨", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik184/300/300"}, {"id": 185, "nom": "Petit gong", "emoji": "🔔", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik185/300/300"}, {"id": 186, "nom": "Clochette bronze", "emoji": "🔔", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik186/300/300"}, {"id": 187, "nom": "Marque-page textile", "emoji": "📖", "prix_vente_eur": 8, "img": "https://picsum.photos/seed/lumik187/300/300"}, {"id": 188, "nom": "Marque-page or", "emoji": "✨", "prix_vente_eur": 14, "img": "https://picsum.photos/seed/lumik188/300/300"}, {"id": 189, "nom": "Petit savon artisanal", "emoji": "🧼", "prix_vente_eur": 12, "img": "https://picsum.photos/seed/lumik189/300/300"}, {"id": 190, "nom": "Baume lèvres naturel", "emoji": "💄", "prix_vente_eur": 10, "img": "https://picsum.photos/seed/lumik190/300/300"}, {"id": 191, "nom": "Pochette brodée", "emoji": "👝", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik191/300/300"}, {"id": 192, "nom": "Pochette soie", "emoji": "👜", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik192/300/300"}, {"id": 193, "nom": "Ceinture tissu", "emoji": "🎀", "prix_vente_eur": 26, "img": "https://picsum.photos/seed/lumik193/300/300"}, {"id": 194, "nom": "Bracelet textile", "emoji": "⌚", "prix_vente_eur": 18, "img": "https://picsum.photos/seed/lumik194/300/300"}, {"id": 195, "nom": "Bague simple", "emoji": "💍", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik195/300/300"}, {"id": 196, "nom": "Pendentif bois", "emoji": "🪵", "prix_vente_eur": 22, "img": "https://picsum.photos/seed/lumik196/300/300"}, {"id": 197, "nom": "Collier perles", "emoji": "💎", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik197/300/300"}, {"id": 198, "nom": "Boucles oreilles", "emoji": "💎", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik198/300/300"}, {"id": 199, "nom": "Mouchoir coton", "emoji": "🧻", "prix_vente_eur": 8, "img": "https://picsum.photos/seed/lumik199/300/300"}, {"id": 200, "nom": "Mouchoir soie", "emoji": "✨", "prix_vente_eur": 16, "img": "https://picsum.photos/seed/lumik200/300/300"}, {"id": 201, "nom": "Collier soie Kyoto", "emoji": "💎", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik201/300/300"}, {"id": 202, "nom": "Collier perles blanches", "emoji": "💎", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik202/300/300"}, {"id": 203, "nom": "Collier or 24k", "emoji": "✨", "prix_vente_eur": 98, "img": "https://picsum.photos/seed/lumik203/300/300"}, {"id": 204, "nom": "Collier argent épuré", "emoji": "💫", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik204/300/300"}, {"id": 205, "nom": "Collier sakura rose", "emoji": "🌸", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik205/300/300"}, {"id": 206, "nom": "Boucles oreilles or", "emoji": "✨", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik206/300/300"}, {"id": 207, "nom": "Boucles oreilles perle", "emoji": "💎", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik207/300/300"}, {"id": 208, "nom": "Boucles oreilles argent", "emoji": "💫", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik208/300/300"}, {"id": 209, "nom": "Boucles oreilles sakura", "emoji": "🌸", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik209/300/300"}, {"id": 210, "nom": "Boucles oreilles jade", "emoji": "💚", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik210/300/300"}, {"id": 211, "nom": "Bracelet perles miyuki", "emoji": "💎", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik211/300/300"}, {"id": 212, "nom": "Bracelet argent chaîne", "emoji": "💫", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik212/300/300"}, {"id": 213, "nom": "Bracelet or massif", "emoji": "✨", "prix_vente_eur": 85, "img": "https://picsum.photos/seed/lumik213/300/300"}, {"id": 214, "nom": "Bracelet tissu tressé", "emoji": "🎀", "prix_vente_eur": 22, "img": "https://picsum.photos/seed/lumik214/300/300"}, {"id": 215, "nom": "Bracelet corail rouge", "emoji": "🪸", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik215/300/300"}, {"id": 216, "nom": "Bracelet jade vert", "emoji": "💚", "prix_vente_eur": 62, "img": "https://picsum.photos/seed/lumik216/300/300"}, {"id": 217, "nom": "Bracelet perles bois", "emoji": "🪵", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik217/300/300"}, {"id": 218, "nom": "Bague chevalière", "emoji": "💍", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik218/300/300"}, {"id": 219, "nom": "Bague or 18k", "emoji": "✨", "prix_vente_eur": 92, "img": "https://picsum.photos/seed/lumik219/300/300"}, {"id": 220, "nom": "Bague argent motif", "emoji": "💫", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik220/300/300"}, {"id": 221, "nom": "Bague jade", "emoji": "💚", "prix_vente_eur": 58, "img": "https://picsum.photos/seed/lumik221/300/300"}, {"id": 222, "nom": "Bague perle", "emoji": "💎", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik222/300/300"}, {"id": 223, "nom": "Bague amethyste", "emoji": "💜", "prix_vente_eur": 62, "img": "https://picsum.photos/seed/lumik223/300/300"}, {"id": 224, "nom": "Bague corail", "emoji": "🪸", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik224/300/300"}, {"id": 225, "nom": "Pendentif grue", "emoji": "🦢", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik225/300/300"}, {"id": 226, "nom": "Pendentif sakura", "emoji": "🌸", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik226/300/300"}, {"id": 227, "nom": "Pendentif or 24k", "emoji": "✨", "prix_vente_eur": 88, "img": "https://picsum.photos/seed/lumik227/300/300"}, {"id": 228, "nom": "Pendentif jade", "emoji": "💚", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik228/300/300"}, {"id": 229, "nom": "Pendentif yin yang", "emoji": "☯️", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik229/300/300"}, {"id": 230, "nom": "Pendentif cerise", "emoji": "🍒", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik230/300/300"}, {"id": 231, "nom": "Pendentif montagne", "emoji": "⛰️", "prix_vente_eur": 42, "img": "https://picsum.photos/seed/lumik231/300/300"}, {"id": 232, "nom": "Broche fleur", "emoji": "🌸", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik232/300/300"}, {"id": 233, "nom": "Broche papillon", "emoji": "🦋", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik233/300/300"}, {"id": 234, "nom": "Broche or", "emoji": "✨", "prix_vente_eur": 72, "img": "https://picsum.photos/seed/lumik234/300/300"}, {"id": 235, "nom": "Broche argent", "emoji": "💫", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik235/300/300"}, {"id": 236, "nom": "Chaîne or fine", "emoji": "✨", "prix_vente_eur": 65, "img": "https://picsum.photos/seed/lumik236/300/300"}, {"id": 237, "nom": "Chaîne argent", "emoji": "💫", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik237/300/300"}, {"id": 238, "nom": "Chaîne perles", "emoji": "💎", "prix_vente_eur": 52, "img": "https://picsum.photos/seed/lumik238/300/300"}, {"id": 239, "nom": "Montre tissu", "emoji": "⌚", "prix_vente_eur": 35, "img": "https://picsum.photos/seed/lumik239/300/300"}, {"id": 240, "nom": "Montre cuir Kyoto", "emoji": "⌚", "prix_vente_eur": 68, "img": "https://picsum.photos/seed/lumik240/300/300"}, {"id": 241, "nom": "Épingle cheveux or", "emoji": "✨", "prix_vente_eur": 28, "img": "https://picsum.photos/seed/lumik241/300/300"}, {"id": 242, "nom": "Épingle cheveux perle", "emoji": "💎", "prix_vente_eur": 32, "img": "https://picsum.photos/seed/lumik242/300/300"}, {"id": 243, "nom": "Épingle cheveux jade", "emoji": "💚", "prix_vente_eur": 38, "img": "https://picsum.photos/seed/lumik243/300/300"}, {"id": 244, "nom": "Kanzashi traditionnel", "emoji": "🌸", "prix_vente_eur": 48, "img": "https://picsum.photos/seed/lumik244/300/300"}, {"id": 245, "nom": "Kanzashi soie", "emoji": "✨", "prix_vente_eur": 55, "img": "https://picsum.photos/seed/lumik245/300/300"}, {"id": 246, "nom": "Anneau motif", "emoji": "💍", "prix_vente_eur": 24, "img": "https://picsum.photos/seed/lumik246/300/300"}, {"id": 247, "nom": "Anneau or épuré", "emoji": "✨", "prix_vente_eur": 45, "img": "https://picsum.photos/seed/lumik247/300/300"}, {"id": 248, "nom": "Anneau couple", "emoji": "💑", "prix_vente_eur": 62, "img": "https://picsum.photos/seed/lumik248/300/300"}, {"id": 249, "nom": "Boîte bijoux laquée", "emoji": "📦", "prix_vente_eur": 68, "img": "https://picsum.photos/seed/lumik249/300/300"}, {"id": 250, "nom": "Écrin cadeau deluxe", "emoji": "🎁", "prix_vente_eur": 85, "img": "https://picsum.photos/seed/lumik250/300/300"}];
+
+  if(load(KEY_VERSION) !== CATALOG_VERSION){
+    localStorage.removeItem(KEY_PROD);
+    save(KEY_VERSION, CATALOG_VERSION);
+  }
+  let produits = load(KEY_PROD) || produitsDefaut;
+  let panier = load(KEY_CART) || [];
+
+  function load(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
+  function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  const esc = s => { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; };
+  const prixDe = p => Number(p.prix_vente_eur)||0;
+
+  function renderCardImg(p){
+    if(p.img) return `<img src="${p.img}" alt="${esc(p.nom)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;background:#f0f0f0;" onerror="this.parentNode.innerHTML='${p.emoji||'📦'}';">`;
+    return p.emoji||'📦';
+  }
+
+  function renderGrid(){
+    document.getElementById('grid').innerHTML = produits.map(p=>`
+      <div class="card">
+        <div class="card-img">${renderCardImg(p)}</div>
+        <div class="card-body">
+          <div class="card-name">${esc(p.nom)}</div>
+          <div class="card-foot">
+            <span class="card-price">${prixDe(p)}€</span>
+            <button class="card-add" onclick="add(${p.id})" aria-label="Ajouter">+</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function add(id){ panier.push(id); save(KEY_CART,panier); updateCart(); }
+  function changeQty(id,d){
+    if(d>0) panier.push(id);
+    else { const i=panier.indexOf(id); if(i>-1) panier.splice(i,1); }
+    save(KEY_CART,panier); updateCart();
+  }
+  function toggleDrawer(){
+    document.getElementById('drawer').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  }
+
+  function updateCart(){
+    const count = panier.length;
+    const badge = document.getElementById('cartCount');
+    badge.textContent = count; badge.style.display = count ? 'flex' : 'none';
+
+    const grouped = {}; panier.forEach(id=>{ grouped[id]=(grouped[id]||0)+1; });
+    const items = document.getElementById('items');
+    const keys = Object.keys(grouped).filter(id=>produits.find(x=>x.id==id));
+    if(!keys.length){
+      items.innerHTML = '<div class="empty">Votre panier est vide.</div>';
+    } else {
+      items.innerHTML = keys.map(id=>{
+        const p=produits.find(x=>x.id==id), q=grouped[id];
+        return `<div class="row">
+          <div class="ico">${p.emoji||'📦'}</div>
+          <div class="meta"><div class="rn">${esc(p.nom)}</div><div class="rp">${prixDe(p)*q}€</div></div>
+          <div class="qty"><button onclick="changeQty(${id},-1)">−</button><span>${q}</span><button onclick="changeQty(${id},1)">+</button></div>
+        </div>`;
+      }).join('');
+    }
+
+    const total = panier.reduce((a,id)=>{ const p=produits.find(x=>x.id==id); return a+(p?prixDe(p):0); },0);
+    document.getElementById('total').textContent = total+'€';
+    const reste = SEUIL-total, fill=document.getElementById('progFill'), txt=document.getElementById('progText');
+    if(reste<=0){ txt.textContent='🎉 Livraison offerte débloquée'; fill.style.width='100%'; }
+    else { txt.textContent=`Encore ${reste}€ pour la livraison offerte`; fill.style.width=Math.min(100,total/SEUIL*100)+'%'; }
+  }
+
+  // Import CSV — colonnes : id,nom,emoji,prix_vente_eur (avec en-tête)
+  function importCSV(e){
+    const file = e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try{
+        const lignes = ev.target.result.split(/\r?\n/).filter(l=>l.trim());
+        const entete = lignes.shift().split(',').map(h=>h.trim().toLowerCase());
+        const iId=entete.indexOf('id'), iNom=entete.indexOf('nom'),
+              iEmoji=entete.indexOf('emoji'), iPrix=entete.indexOf('prix_vente_eur'),
+              iImg=entete.indexOf('img');
+        if(iNom<0||iPrix<0){ document.getElementById('status').textContent='⚠️ CSV invalide : colonnes nom et prix_vente_eur requises.'; return; }
+        const nouv = lignes.map((l,k)=>{
+          const c=l.split(',');
+          return {
+            id: iId>=0 && c[iId] ? Number(c[iId]) : k+1,
+            nom: (c[iNom]||'').trim(),
+            emoji: iEmoji>=0 ? (c[iEmoji]||'📦').trim() : '📦',
+            img: iImg>=0 ? (c[iImg]||'').trim() : '',
+            prix_vente_eur: Number((c[iPrix]||'0').trim())
+          };
+        }).filter(p=>p.nom);
+        if(!nouv.length){ document.getElementById('status').textContent='⚠️ Aucun produit lu dans le CSV.'; return; }
+        produits = nouv; save(KEY_PROD,produits);
+        renderGrid(); renderFeatured(); updateCart();
+        document.getElementById('status').textContent=`✅ ${produits.length} produits importés.`;
+      }catch(err){ document.getElementById('status').textContent='⚠️ Erreur de lecture du CSV.'; }
+      e.target.value='';
+    };
+    reader.readAsText(file,'UTF-8');
+  }
+
+  function checkout(){
+    if(!panier.length){ alert('Votre panier est vide.'); return; }
+    const grouped={}; panier.forEach(id=>grouped[id]=(grouped[id]||0)+1);
+    let total=0, items=[];
+    Object.keys(grouped).forEach(id=>{
+      const p=produits.find(x=>x.id==id); if(!p) return;
+      const q=grouped[id]; total+=prixDe(p)*q;
+      items.push({id:p.id, nom:p.nom, qty:q, price:prixDe(p)});
+    });
+    
+    const orderData = {items, total, ts:Date.now()};
+    
+    // Sauvegarder la commande en cours (pour la page de confirmation)
+    localStorage.setItem('lumik_checkout_pending', JSON.stringify(orderData));
+    
+    // Sauvegarder aussi dans l'historique
+    const orderId = 'lumik_order_' + Date.now();
+    localStorage.setItem(orderId, JSON.stringify(orderData));
+    
+    // Mode démo : si Lemon IDs non configurés, simuler paiement
+    if(LEMON_STORE_ID==='TBD' || LEMON_PRODUCT_ID==='TBD'){
+      // Paiement simulé : redirection confirmation
+      panier = []; save(KEY_CART, panier); updateCart(); // Clear cart
+      setTimeout(() => location.hash = '#/confirmation', 500);
+      return;
+    }
+    // Production : rediriger vers Lemon Squeezy
+    const checkoutUrl = `https://${LEMON_STORE_ID}.lemonsqueezy.com/checkout/buy/${LEMON_PRODUCT_ID}?checkout[custom][order_id]=${Date.now()}`;
+    window.location.href = checkoutUrl;
+  }
+
+  function renderFeatured(){
+    const el = document.getElementById('featured'); if(!el) return;
+    let sel = [1,6,4].map(i=>produits.find(p=>p.id===i)).filter(Boolean);
+    if(sel.length<3) sel = produits.slice(0,3);
+    el.innerHTML = sel.map(p=>`
+      <div class="card">
+        <div class="card-img">${renderCardImg(p)}</div>
+        <div class="card-body">
+          <div class="card-name">${esc(p.nom)}</div>
+          <div class="card-foot">
+            <span class="card-price">${prixDe(p)}€</span>
+            <button class="card-add" onclick="add(${p.id})" aria-label="Ajouter">+</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function route(){
+    const h = location.hash.replace(/^#/,'');
+    const isHome = !h || h === '/';
+    const isCat = (h === '/catalogue');
+    const isConf = (h === '/confirmation');
+    const isAdmin = (h === '/admin');
+    document.getElementById('home').classList.toggle('active', isHome);
+    document.getElementById('catalogue').classList.toggle('active', isCat);
+    document.getElementById('confirmation').classList.toggle('active', isConf);
+    document.getElementById('admin').style.display = isAdmin ? 'block' : 'none';
+    if(isConf) renderConfirmation();
+    if(isAdmin) renderAdmin();
+    window.scrollTo(0,0);
+  }
+  
+  function renderAdmin(){
+    const allOrders = [];
+    // Chercher toutes les commandes en localStorage
+    for(let i=0; i<localStorage.length; i++){
+      const key = localStorage.key(i);
+      if(key.startsWith('lumik_order_')){
+        try { allOrders.push(JSON.parse(localStorage.getItem(key))); } catch(e){}
+      }
+    }
+    const currentOrder = localStorage.getItem('lumik_checkout_pending');
+    if(currentOrder) try { allOrders.unshift(JSON.parse(currentOrder)); } catch(e){}
+    
+    if(!allOrders.length){ document.getElementById('admin-content').innerHTML = '<p>Aucune commande.</p>'; return; }
+    
+    const html = allOrders.map((o,i)=>`
+      <div style="border:1px solid var(--border);padding:15px;margin-bottom:12px;border-radius:3px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+          <strong>Commande #${i+1}</strong>
+          <span style="color:var(--muted);font-size:12px;">${new Date(o.ts).toLocaleString('fr-FR')}</span>
+        </div>
+        <div style="margin-bottom:10px;">${o.items.map(it=>`
+          <div style="display:flex;justify-content:space-between;font-size:13px;">
+            <span>${esc(it.nom)} ×${it.qty}</span>
+            <span>${it.price*it.qty}€</span>
+          </div>`).join('')}</div>
+        <div style="border-top:1px solid var(--border);padding-top:8px;font-weight:700;font-size:14px;">Total : ${o.total}€</div>
+      </div>`).join('');
+    
+    document.getElementById('admin-content').innerHTML = html;
+  }
+  
+  function renderConfirmation(){
+    const data = localStorage.getItem('lumik_checkout_pending');
+    if(!data){ document.getElementById('conf-content').innerHTML='<p>Aucune commande trouvée.</p>'; return; }
+    const {items, total} = JSON.parse(data);
+    const itemsHtml = items.map(it=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span>${esc(it.nom)} ×${it.qty}</span><span>${it.price*it.qty}€</span></div>`).join('');
+    document.getElementById('conf-items').innerHTML = itemsHtml;
+    document.getElementById('conf-total').innerHTML = `Total : ${total}€`;
+  }
+  window.addEventListener('hashchange', route);
+
+  renderGrid();
+  renderFeatured();
+  updateCart();
+  route();
+</script>
+
+<!-- ░░ Zoom photo produit — clic délégué (modèle id/emoji) ░░ -->
+<script>
+(function(){
+  if(window.__lumikZoom) return; window.__lumikZoom = true;
+
+  var lb = document.createElement('div');
+  lb.id = 'lumik-lb';
+  lb.setAttribute('aria-label','Photo agrandie');
+  lb.innerHTML =
+    '<div class="llb-card">'+
+      '<div class="llb-visual"><button class="llb-close" type="button" aria-label="Fermer">✕</button><span class="llb-img"></span></div>'+
+      '<div class="llb-body">'+
+        '<div class="llb-name"></div>'+
+        '<div class="llb-foot"><span class="llb-price"></span><button class="llb-add" type="button">Ajouter au panier</button></div>'+
+      '</div>'+
+    '</div>';
+  document.body.appendChild(lb);
+
+  var vis = lb.querySelector('.llb-img'),
+      nm  = lb.querySelector('.llb-name'),
+      pr  = lb.querySelector('.llb-price'),
+      ad  = lb.querySelector('.llb-add');
+
+  function closeLB(){ lb.classList.remove('open'); }
+  lb.addEventListener('click', function(e){ if(e.target === lb) closeLB(); });
+  lb.querySelector('.llb-close').addEventListener('click', closeLB);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLB(); });
+
+  function prixOf(p){ try{ return (typeof prixDe==='function') ? prixDe(p) : (Number(p.prix_vente_eur)||0); }catch(e){ return Number(p.prix_vente_eur)||0; } }
+  function findProd(id){
+    try{ return produits.find(function(p){ return String(p.id) === String(id); }); }catch(e){ return null; }
+  }
+  function openLB(id){
+    var p = findProd(id);
+    vis.innerHTML = '';
+    if(p && p.img){ var im = new Image(); im.src = p.img; im.alt = p.nom || ''; im.onerror = function(){ vis.textContent = (p && p.emoji) ? p.emoji : '📦'; vis.style.fontSize=''; }; vis.appendChild(im); vis.style.fontSize='0'; }
+    else { vis.textContent = (p && p.emoji) ? p.emoji : '📦'; vis.style.fontSize=''; }
+    nm.textContent = p ? (p.nom || '') : '';
+    pr.textContent = p ? (prixOf(p) + '€') : '';
+    ad.onclick = function(){ if(typeof add === 'function' && p) add(p.id); closeLB(); };
+    lb.classList.add('open');
+  }
+
+  // clic délégué : marche pour la grille catalogue ET les « plus choisis »
+  document.addEventListener('click', function(e){
+    var img = e.target.closest && e.target.closest('.card-img');
+    if(!img) return;
+    var card = img.closest('.card'); if(!card) return;
+    var addBtn = card.querySelector('.card-add');
+    var oc = addBtn ? (addBtn.getAttribute('onclick') || '') : '';
+    var m = oc.match(/add\(\s*(\d+)\s*\)/);
+    if(!m) return;
+    e.preventDefault();
+    openLB(m[1]);
+  });
+})();
+</script>
+<!-- Lemon Squeezy integration -->
+<script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+</body>
+</html>
