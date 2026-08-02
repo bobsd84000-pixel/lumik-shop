@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IntelBase — LUMIK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --serif:'Shippori Mincho', serif;
+    --sans:'Zen Kaku Gothic New', system-ui, sans-serif;
+    --washi:#F4F1E9; --sumi:#1C1A17; --urushi:#8B6B47; --shu:#C0392B;
+    --border:#E2DDD0; --muted:#857F73; --card:#FBFAF6;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;background:var(--washi);color:var(--sumi);font-family:var(--sans);line-height:1.6;}
+  body{overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--shu);color:#fff;}
+
+  header{display:flex;align-items:center;gap:12px;padding:14px 18px;
+         background:rgba(244,241,233,.85);backdrop-filter:blur(10px);
+         border-bottom:1px dashed var(--border);position:sticky;top:0;z-index:50;}
+  header h1{font-family:var(--serif);font-size:20px;margin:0;font-weight:700;}
+  header .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  main{max-width:900px;margin:0 auto;padding:28px 18px 60px;}
+
+  .panel{background:var(--card);border:1px dashed var(--border);border-radius:10px;padding:20px;margin-bottom:22px;}
+  .panel label{display:block;font-family:var(--serif);font-size:15px;margin-bottom:12px;}
+
+  .row{display:flex;gap:10px;flex-wrap:wrap;}
+  input[type=email]{flex:1;min-width:180px;padding:12px 14px;font-family:var(--sans);font-size:15px;
+    border:1px dashed var(--border);border-radius:8px;background:var(--washi);color:var(--sumi);}
+  input[type=email]:focus{outline:none;border-color:var(--urushi);box-shadow:0 0 0 1px var(--urushi);}
+  button.primary{padding:12px 22px;background:var(--urushi);color:#fff;border:0;border-radius:8px;
+    font-family:var(--serif);font-size:15px;font-weight:600;cursor:pointer;}
+  button.primary:active{opacity:.85;}
+  button.primary:disabled{opacity:.5;}
+
+  .avatar{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:var(--serif);font-weight:700;font-size:18px;
+    background:linear-gradient(135deg,var(--shu),var(--urushi));flex-shrink:0;}
+  .profile-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
+  .profile-head h2{font-family:var(--serif);font-size:22px;margin:0;}
+  .profile-head .role{color:var(--muted);font-size:14px;}
+
+  .badge{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;}
+  .badge.low{background:#E6EDE1;color:#4A6138;}
+  .badge.mid{background:#F4EBD8;color:#8A6A20;}
+  .badge.high{background:#F6E3E0;color:#A03225;}
+
+  .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;padding-top:18px;border-top:1px dashed var(--border);}
+  @media(min-width:640px){.grid{grid-template-columns:1fr 1fr;}}
+  .field .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+  .field .v{margin-top:4px;font-size:15px;}
+  code{background:var(--washi);padding:8px 10px;border-radius:6px;font-size:13px;display:inline-block;}
+
+  .bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;flex:1;}
+  .bar i{display:block;height:100%;border-radius:999px;}
+
+  .foot{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;padding-top:16px;
+    border-top:1px dashed var(--border);font-size:13px;color:var(--muted);}
+
+  .hist button{display:block;width:100%;text-align:left;padding:11px 12px;background:none;
+    border:0;border-bottom:1px dashed var(--border);font-family:var(--sans);font-size:14px;
+    color:var(--sumi);cursor:pointer;}
+  .hist button:last-child{border-bottom:0;}
+  h3{font-family:var(--serif);font-size:17px;margin:0 0 10px;}
+
+  .toast{position:fixed;bottom:18px;right:18px;background:var(--urushi);color:#fff;
+    padding:11px 16px;border-radius:8px;font-size:14px;}
+  .hide{display:none;}
+  .center{text-align:center;padding:40px 0;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>IntelBase</h1>
+  <span class="tag">Recherche OSINT</span>
+</header>
+
+<main>
+  <div class="panel">
+    <label for="mail">Rechercher une adresse email</label>
+    <div class="row">
+      <input type="email" id="mail" placeholder="exemple@domaine.fr" autocomplete="off">
+      <button class="primary" id="go">Rechercher</button>
+    </div>
+  </div>
+
+  <div id="loading" class="center hide">Recherche en cours…</div>
+  <div id="result" class="hide"></div>
+
+  <div class="panel hist hide" id="histBox">
+    <h3>Recherches récentes</h3>
+    <div id="hist"></div>
+  </div>
+</main>
+
+<div class="toast hide" id="toast">Copié dans le presse-papiers</div>
+
+<script>
+(function(){
+  var noms=['Alexandre Martin','Sophie Dubois','Jean Dupont','Marie Laurent','Pierre Moreau'];
+  var boites=['TechCorp','Digital Solutions','Cloud Systems','Data Analytics','StartupXYZ'];
+  var roles=['Développeur','Product Manager','CTO','Data Scientist','Fondateur'];
+  var villes=['Paris','Lyon','Marseille','Toulouse','Bordeaux'];
+  var hist=[];
+
+  function pick(a){return a[Math.floor(Math.random()*a.length)];}
+
+  function gen(email){
+    var n=pick(noms), p=n.split(' ');
+    return {
+      email:email, nom:n, initiales:p[0][0]+(p[1]?p[1][0]:''),
+      boite:pick(boites), role:pick(roles), ville:pick(villes),
+      tel:'+33 6 '+String(Math.floor(Math.random()*1e8)).padStart(8,'0'),
+      linkedin:'linkedin.com/in/'+email.split('@')[0].replace('.','-'),
+      risque:Math.floor(Math.random()*100),
+      verifie:Math.random()>0.4,
+      sources:Math.floor(Math.random()*15)+3,
+      maj:new Date(Date.now()-Math.random()*2592e6).toLocaleDateString('fr-FR')
+    };
+  }
+
+  function badge(s){
+    if(s<30) return '<span class="badge low">Faible risque</span>';
+    if(s<70) return '<span class="badge mid">Risque modéré</span>';
+    return '<span class="badge high">Risque élevé</span>';
+  }
+  function barColor(s){ return s<30?'#6E8C52':(s<70?'#C79A3A':'#C0392B'); }
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function render(r){
+    return '<div class="panel">'
+      +'<div class="profile-head">'
+        +'<div class="avatar">'+esc(r.initiales)+'</div>'
+        +'<div style="flex:1;min-width:150px">'
+          +'<h2>'+esc(r.nom)+'</h2>'
+          +'<div class="role">'+esc(r.role)+'</div>'
+          +'<div class="role">'+esc(r.boite)+'</div>'
+        +'</div>'
+        +badge(r.risque)
+      +'</div>'
+      +'<div class="grid">'
+        +'<div>'
+          +'<div class="field"><div class="k">Email</div><div class="v">'
+            +'<code>'+esc(r.email)+'</code> '
+            +'<button id="cp" style="background:none;border:0;cursor:pointer;color:var(--urushi);font-size:13px">copier</button>'
+          +'</div></div>'
+          +'<div class="field" style="margin-top:14px"><div class="k">Localisation</div><div class="v">'+esc(r.ville)+', France</div></div>'
+          +'<div class="field" style="margin-top:14px"><div class="k">Téléphone</div><div class="v">'+esc(r.tel)+'</div></div>'
+        +'</div>'
+        +'<div>'
+          +'<div class="field"><div class="k">LinkedIn</div><div class="v" style="color:var(--urushi)">'+esc(r.linkedin)+'</div></div>'
+          +'<div class="field" style="margin-top:14px"><div class="k">Vérification</div><div class="v">'+(r.verifie?'Vérifié':'Non vérifié')+'</div></div>'
+          +'<div class="field" style="margin-top:14px"><div class="k">Score de risque</div>'
+            +'<div class="v" style="display:flex;align-items:center;gap:10px">'
+              +'<span class="bar"><i style="width:'+r.risque+'%;background:'+barColor(r.risque)+'"></i></span>'
+              +'<b>'+r.risque+'%</b>'
+            +'</div>'
+          +'</div>'
+        +'</div>'
+      +'</div>'
+      +'<div class="foot"><span>'+r.sources+' sources trouvées</span><span>Mise à jour : '+esc(r.maj)+'</span></div>'
+    +'</div>';
+  }
+
+  var $mail=document.getElementById('mail'), $go=document.getElementById('go'),
+      $load=document.getElementById('loading'), $res=document.getElementById('result'),
+      $hist=document.getElementById('hist'), $histBox=document.getElementById('histBox'),
+      $toast=document.getElementById('toast');
+
+  function toast(){ $toast.classList.remove('hide'); setTimeout(function(){$toast.classList.add('hide');},2000); }
+
+  function drawHist(){
+    if(!hist.length){ $histBox.classList.add('hide'); return; }
+    $histBox.classList.remove('hide');
+    $hist.innerHTML='';
+    hist.forEach(function(e){
+      var b=document.createElement('button');
+      b.textContent=e;
+      b.onclick=function(){ $mail.value=e; $res.classList.add('hide'); };
+      $hist.appendChild(b);
+    });
+  }
+
+  function search(){
+    var v=$mail.value.trim();
+    if(!v) return;
+    $go.disabled=true; $res.classList.add('hide'); $load.classList.remove('hide');
+    setTimeout(function(){
+      var r=gen(v);
+      $res.innerHTML=render(r);
+      $load.classList.add('hide'); $res.classList.remove('hide'); $go.disabled=false;
+      var cp=document.getElementById('cp');
+      if(cp) cp.onclick=function(){
+        if(navigator.clipboard) navigator.clipboard.writeText(r.email);
+        toast();
+      };
+      if(hist.indexOf(v)===-1){ hist.unshift(v); hist=hist.slice(0,5); drawHist(); }
+    },700);
+  }
+
+  $go.addEventListener('click',search);
+  $mail.addEventListener('keydown',function(e){ if(e.key==='Enter') search(); });
+})();
+</script>
+</body>
+</html>

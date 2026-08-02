@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI UX Pro Max — LUMIK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --serif:'Shippori Mincho', serif;
+    --sans:'Zen Kaku Gothic New', system-ui, sans-serif;
+    --washi:#F4F1E9; --sumi:#1C1A17; --urushi:#8B6B47; --shu:#C0392B;
+    --border:#E2DDD0; --muted:#857F73; --card:#FBFAF6;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;background:var(--washi);color:var(--sumi);font-family:var(--sans);line-height:1.6;}
+  body{overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--shu);color:#fff;}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 18px;}
+
+  nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+      padding:14px 18px;background:rgba(244,241,233,.85);backdrop-filter:blur(10px);
+      border-bottom:1px dashed var(--border);}
+  .logo{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-weight:700;font-size:17px;}
+  .mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--shu),var(--urushi));}
+  nav .links{display:none;gap:22px;font-size:14px;color:var(--muted);}
+  @media(min-width:760px){nav .links{display:flex;}}
+
+  section{padding:56px 0;}
+  section.alt{background:var(--card);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);}
+
+  h1{font-family:var(--serif);font-size:34px;line-height:1.25;margin:0 0 16px;font-weight:700;}
+  @media(min-width:760px){h1{font-size:46px;}}
+  h1 span{color:var(--muted);}
+  h2{font-family:var(--serif);font-size:25px;margin:0 0 12px;font-weight:700;}
+  h3{font-family:var(--serif);font-size:17px;margin:0 0 6px;font-weight:600;}
+  .lede{font-size:16px;color:var(--muted);max-width:640px;margin:0 0 24px;}
+
+  .cta{display:inline-block;padding:13px 26px;background:var(--urushi);color:#fff;border-radius:8px;
+       font-family:var(--serif);font-weight:600;font-size:15px;}
+
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:44px;}
+  @media(min-width:760px){.stats{grid-template-columns:repeat(6,1fr);}}
+  .stat{text-align:center;}
+  .stat b{display:block;font-family:var(--serif);font-size:30px;color:var(--urushi);line-height:1.2;}
+  .stat span{font-size:12px;color:var(--muted);}
+
+  .cards{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:640px){.cards{grid-template-columns:1fr 1fr;}}
+  @media(min-width:960px){.cards{grid-template-columns:repeat(3,1fr);}}
+  .card{background:var(--washi);border:1px dashed var(--border);border-radius:10px;padding:20px;}
+  .card .ico{font-size:24px;margin-bottom:8px;}
+  .card p{font-size:14px;color:var(--muted);margin:0;}
+
+  .steps{display:grid;grid-template-columns:1fr;gap:26px;margin-bottom:30px;}
+  @media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr);}}
+  .step b{font-family:var(--serif);font-size:38px;color:var(--border);display:block;line-height:1;margin-bottom:8px;}
+  .step p{font-size:14px;color:var(--muted);margin:0;}
+
+  .term{background:var(--card);border:1px dashed var(--urushi);border-radius:10px;padding:18px;
+        font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;overflow-x:auto;}
+  .term .dim{color:var(--muted);}
+
+  .stacks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  @media(min-width:640px){.stacks{grid-template-columns:repeat(4,1fr);}}
+  @media(min-width:960px){.stacks{grid-template-columns:repeat(6,1fr);}}
+  .stacks div{background:var(--washi);border:1px dashed var(--border);border-radius:8px;
+    padding:13px 8px;text-align:center;font-size:13.5px;}
+
+  .post{border-left:3px solid var(--urushi);padding:12px 0 12px 18px;margin-bottom:18px;}
+  .post .tag{font-size:12px;color:var(--urushi);}
+  .post h3{margin:5px 0;}
+  .post .date{font-size:12.5px;color:var(--muted);}
+
+  .demos{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:640px){.demos{grid-template-columns:1fr 1fr;}}
+  @media(min-width:960px){.demos{grid-template-columns:repeat(3,1fr);}}
+  .demo{background:var(--washi);border:1px dashed var(--border);border-radius:10px;overflow:hidden;}
+  .demo .thumb{height:110px;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+  .demo .body{padding:15px;}
+  .demo p{font-size:13px;color:var(--muted);margin:4px 0 0;}
+
+  footer{background:var(--sumi);color:#CFC8B9;padding:48px 0 28px;}
+  footer .cols{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:28px;}
+  @media(min-width:760px){footer .cols{grid-template-columns:repeat(4,1fr);}}
+  footer h4{font-family:var(--serif);color:#F4F1E9;font-size:15px;margin:0 0 10px;}
+  footer ul{list-style:none;margin:0;padding:0;font-size:13.5px;}
+  footer li{margin-bottom:7px;}
+  footer .bottom{border-top:1px dashed #3A342B;padding-top:18px;text-align:center;font-size:12.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="mark"></span>UI UX Pro Max</div>
+  <div class="links"><a href="#">Accueil</a><a href="#">Docs</a><a href="#">Tutoriels</a><a href="#">Blog</a><a href="#">Exemples</a></div>
+</nav>
+
+<section>
+  <div class="wrap">
+    <h1>UI UX Pro Max <span>Design Intelligence</span></h1>
+    <p class="lede">Agent Skills pour Claude Code, Cursor, Windsurf et autres assistants IA. 67 styles UI, 161 palettes, 57 paires de polices, 99 règles UX, 25 types de graphiques.</p>
+    <a class="cta" href="#">Démarrage rapide</a>
+
+    <div class="stats">
+      <div class="stat"><b>67</b><span>Styles UI</span></div>
+      <div class="stat"><b>161</b><span>Palettes</span></div>
+      <div class="stat"><b>57</b><span>Polices</span></div>
+      <div class="stat"><b>16</b><span>Stacks</span></div>
+      <div class="stat"><b>25</b><span>Graphiques</span></div>
+      <div class="stat"><b>161</b><span>Règles</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>Tout ce qu'il faut pour une belle interface</h2>
+    <p class="lede">Cherchez, découvrez et implémentez des interfaces soignées avec des recommandations assistées par IA.</p>
+    <div class="cards">
+      <div class="card"><div class="ico">✦</div><h3>Styles de design</h3><p>Glassmorphism, neumorphism, minimalisme, brutalisme, Aurora UI et 60 autres.</p></div>
+      <div class="card"><div class="ico">◈</div><h3>Palettes</h3><p>161 systèmes de couleurs par type de produit : SaaS, e-commerce, santé, fintech.</p></div>
+      <div class="card"><div class="ico">◇</div><h3>Typographie</h3><p>57 paires de polices avec intégration Google Fonts et configs Tailwind.</p></div>
+      <div class="card"><div class="ico">▤</div><h3>Graphiques</h3><p>25 recommandations de visualisation avec suggestions de librairies.</p></div>
+      <div class="card"><div class="ico">◎</div><h3>Landing pages</h3><p>34 structures de page optimisées conversion avec placement des CTA.</p></div>
+      <div class="card"><div class="ico">✓</div><h3>Règles UX</h3><p>Bonnes pratiques et anti-patterns : animation, accessibilité, z-index, chargement.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Comment ça marche</h2>
+    <div class="steps">
+      <div class="step"><b>1</b><h3>Votre demande</h3><p>« Fais une landing page pour un salon de toilettage. Style ludique et chaleureux. »</p></div>
+      <div class="step"><b>2</b><h3>Raisonnement IA</h3><p>Analyse du type de produit, du style, de la typographie, des couleurs et des règles UX.</p></div>
+      <div class="step"><b>3</b><h3>Génération</h3><p>Produit du HTML, du React ou des composants spécifiques au framework.</p></div>
+    </div>
+    <div class="term">
+      <div>$ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --design-system</div>
+      <div class="dim">→ Recherche : produit, style, typographie, couleur, landing, ux…</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>16 stacks supportées</h2>
+    <div class="stacks">
+      <div>React</div><div>Next.js</div><div>Astro</div><div>Vue</div><div>Nuxt.js</div><div>Nuxt UI</div>
+      <div>Svelte</div><div>SwiftUI</div><div>React Native</div><div>Flutter</div><div>HTML + Tailwind</div><div>shadcn/ui</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Derniers articles</h2>
+    <div class="post">
+      <div class="tag">design-tokens</div>
+      <h3>Les tokens avant les composants : la seule façon de garder du Tailwind généré maintenable</h3>
+      <div class="date">2026-06-11 · 3 min</div>
+    </div>
+    <div class="post">
+      <div class="tag">landing-page</div>
+      <h3>L'ordre des sections est un argument de confiance</h3>
+      <div class="date">2026-06-08 · 3 min</div>
+    </div>
+    <div class="post">
+      <div class="tag">styles</div>
+      <h3>Glassmorphism, neumorphism, flat : un guide de décision, pas une planche d'ambiance</h3>
+      <div class="date">2026-06-04 · 3 min</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>Galerie de démos</h2>
+    <div class="demos">
+      <div class="demo"><div class="thumb" style="background:linear-gradient(135deg,#8B6B4722,#8B6B4744)">SaaS</div>
+        <div class="body"><h3>Dashboard analytique</h3><p>Glassmorphism + flat design</p></div></div>
+      <div class="demo"><div class="thumb" style="background:linear-gradient(135deg,#C0392B22,#C0392B44)">Éducation</div>
+        <div class="body"><h3>Plateforme éducative</h3><p>Claymorphism + couleurs vives</p></div></div>
+      <div class="demo"><div class="thumb" style="background:linear-gradient(135deg,#8B6B4722,#C0392B33)">Services</div>
+        <div class="body"><h3>Toilettage & spa</h3><p>Claymorphism + blocs</p></div></div>
+      <div class="demo"><div class="thumb" style="background:linear-gradient(135deg,#8B6B4733,#8B6B4711)">IA</div>
+        <div class="body"><h3>Plateforme chatbot</h3><p>AI-Native UI + minimalisme</p></div></div>
+      <div class="demo"><div class="thumb" style="background:linear-gradient(135deg,#1C1A1722,#1C1A1744)">E-commerce</div>
+        <div class="body"><h3>Boutique de luxe</h3><p>Liquid glass + glassmorphism</p></div></div>
+      <div class="demo"><div class="thumb" style="background:linear-gradient(135deg,#C0392B33,#8B6B4733)">Fintech</div>
+        <div class="body"><h3>Dashboard crypto</h3><p>Glassmorphism + mode sombre</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4><span class="mark" style="display:inline-block;vertical-align:-5px;margin-right:7px"></span>UI UX Pro Max</h4>
+        <p style="font-size:13.5px;color:var(--muted);margin:0">Design intelligence pour assistants de code IA.</p>
+      </div>
+      <div><h4>Ressources</h4><ul><li>Docs</li><li>Tutoriels</li><li>Blog</li><li>Exemples</li></ul></div>
+      <div><h4>Base de données</h4><ul><li>67 styles UI</li><li>161 palettes</li><li>57 paires de polices</li><li>25 graphiques</li></ul></div>
+      <div><h4>Légal</h4><ul><li>À propos</li><li>Confidentialité</li><li>Conditions</li><li>Contact</li></ul></div>
+    </div>
+    <div class="bottom">灯 LUMIK — clone de démonstration</div>
+  </div>
+</footer>
+
+</body>
+</html>
